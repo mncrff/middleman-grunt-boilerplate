@@ -14,6 +14,7 @@ module.exports = function(grunt) {
 
         config: {
             'root': 'middleman',
+            'locales': '<%= config.root %>/locales',
             'src': '<%= config.root %>/source',
             'dist': '<%= config.root %>/build',
             'styles_src': '<%= config.src %>/assets/stylesheets/sass',
@@ -29,13 +30,14 @@ module.exports = function(grunt) {
             },
             middleman: {
                 files: [ 
+                    '<%= config.locales %>/*.yml',
                     '<%= config.src %>/**/*',
                     '!<%= config.styles_src %>/**/*',
                     '!<%= config.js_src %>/**/*',
                     '!<%= config.src %>/*.rb',
                     '!<%= config.src %>/Gemfile*.rb'
                 ],
-                tasks: [ 'middleman:build' ]
+                tasks: ['middleman:build']
             },
             sass: {
                 files: ['<%= config.styles_src %>/*.scss'],
@@ -43,7 +45,7 @@ module.exports = function(grunt) {
             },
             scripts: {
                 files: ['<%= config.js_src %>/**/*.js'],
-                tasks: [ 'concat' ]
+                tasks: ['concat']
             }
         },
 
@@ -69,7 +71,7 @@ module.exports = function(grunt) {
                     {
                         expand: true,
                         cwd: '<%= config.styles_dist %>',
-                        src: ['**/*.css'],
+                        src: ['*.css', '!*.min.css'],
                         dest: '<%= config.styles_dist %>',
                         ext: '.css'
                     },
