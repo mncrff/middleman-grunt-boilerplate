@@ -1,1 +1,13 @@
-Index Page
+---
+---
+
+<% content_for :title do %>
+	<%= I18n.t(:index_title) %>
+<% end %>
+
+<div class="index">
+  <h1><%= I18n.t(:index_headline) %></h1>
+  <p class="doc">
+    <%= I18n.t(:index_localized_intro) %>
+  </p>
+</div>

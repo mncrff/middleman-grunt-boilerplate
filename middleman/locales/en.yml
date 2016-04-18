@@ -1,4 +1,7 @@
 ---
 en:
-  hello: hello world
-  title: title-en
+  hello: Hello world
+
+  index_title: Localized index page
+  index_headline: Localized index page
+  index_localized_intro: This is in english

@@ -1,4 +1,7 @@
 ---
 pt:
   hello: Olá Mundo
-  title: title-pt
+
+  index_title: Página de índice localizada
+  index_headline: Página de índice localizada
+  index_localized_intro: Isto está em português

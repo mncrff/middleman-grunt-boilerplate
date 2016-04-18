@@ -26,6 +26,10 @@ activate :i18n, :path => "/:locale",
 ignore 'assets/stylesheets/**'
 ignore 'assets/javascripts/**'
 
+set :js_dir, 'assets/javascripts'
+set :css_dir, 'assets/stylesheets'
+set :images_dir, 'assets/images'
+
 ###
 # Helpers
 ###

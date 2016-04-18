@@ -1,5 +1,13 @@
 ---
-title: Hello World
 ---
 
-<%= I18n.t(:hello) %>
+<% content_for :title do %>
+	<%= I18n.t(:hello) %>
+<% end %>
+
+<div class="index">
+  <h1><%= I18n.t(:hello) %></h1>
+  <p class="doc">
+    <%= I18n.t(:hello) %>
+  </p>
+</div>
