@@ -1,0 +1,5 @@
+---
+pt-BR:
+  paths:
+    hello: ola
+  hello: olá mundo

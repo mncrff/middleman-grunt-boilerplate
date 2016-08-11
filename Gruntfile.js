@@ -14,6 +14,7 @@ module.exports = function(grunt) {
 
         config: {
             'root': 'middleman',
+            'locales': '<%= config.root %>/locales',
             'src': '<%= config.root %>/source',
             'dist': '<%= config.root %>/build',
             'styles_src': '<%= config.src %>/assets/stylesheets/sass',
@@ -29,16 +30,17 @@ module.exports = function(grunt) {
             },
             middleman: {
                 files: [ 
+                    '<%= config.locales %>/*.yml',
                     '<%= config.src %>/**/*',
                     '!<%= config.styles_src %>/**/*',
                     '!<%= config.js_src %>/**/*',
                     '!<%= config.src %>/*.rb',
                     '!<%= config.src %>/Gemfile*.rb'
                 ],
-                tasks: [ 'middleman:build' ]
+                tasks: [ 'middleman:development' ]
             },
             sass: {
-                files: ['<%= config.styles_src %>/*.scss'],
+                files: ['<%= config.styles_src %>/**/*.scss'],
                 tasks: ['sass', 'autoprefixer']
             },
             scripts: {
@@ -69,7 +71,7 @@ module.exports = function(grunt) {
                     {
                         expand: true,
                         cwd: '<%= config.styles_dist %>',
-                        src: ['**/*.css'],
+                        src: ['*.css', '!*.min.css'],
                         dest: '<%= config.styles_dist %>',
                         ext: '.css'
                     },
@@ -100,23 +102,43 @@ module.exports = function(grunt) {
             },
             dist: {
                 src: [
-                    '<%= config.js_src %>/**/*.js'
+                    '<%= config.js_src %>/libs/*.js',
+                    '<%= config.js_src %>/*.js'
                 ],
                 dest: '<%= config.js_dist %>/master.js'
             },
         },
 
 
+        uglify: {
+            my_target: {
+                files: {
+                    '<%= config.js_dist %>/master.min.js': ['<%= config.js_dist %>/master.js']
+                }
+            }
+        },
+
+
         middleman: {
             options: {
                 useBundle: false,
+                verbose: true,
                 cwd: "<%= config.root %>"
             },
-            server: {},
-            build: {
+            development: {
                 options: {
-                    verbose: true,
-                    command: "build"
+                    command: "build",
+                    env: {
+                        gruntenv: 'development'
+                    }
+                }
+            },
+            production: {
+                options: {
+                    command: "build",
+                    env: {
+                        gruntenv: 'production'
+                    }
                 }
             }
         },
@@ -125,6 +147,22 @@ module.exports = function(grunt) {
         clean: {
             build: {
                 src: ['<%= config.dist %>']
+            }
+        },
+
+
+        cacheBust: {
+            options: {
+                baseDir: '<%= config.dist %>',
+                assets: ['assets/**/*', '!assets/fonts/**/*'],
+                deleteOriginals: true
+            },
+            all: {
+                files: [{   
+                    expand: true,
+                    cwd: '<%= config.dist %>',
+                    src: ['**/*.html', 'assets/stylesheets/**/*', 'assets/javascripts/**/*']
+                }]
             }
         },
 
@@ -149,9 +187,6 @@ module.exports = function(grunt) {
         grunt.log.writeln('-----');
         grunt.log.writeln('To serve the site at localhost:4567 and watch for changes:');
         grunt.log.writeln('grunt app-serve');
-        grunt.log.writeln('');
-        grunt.log.writeln('To create the build:');
-        grunt.log.writeln('grunt app-build');
     });
 
 
@@ -159,7 +194,7 @@ module.exports = function(grunt) {
      * Serves the site and watches for changes.
      */
     grunt.registerTask('app-serve', [
-        'app-build',
+        'app-development',
         'connect',
         'watch'
     ]);
@@ -167,15 +202,30 @@ module.exports = function(grunt) {
 
     /**
      * Builds the site and creates static files in `build` folder.
+     * Assets are handled as development environment assets.
      */
-    grunt.registerTask('app-build', [
+    grunt.registerTask('app-development', [
         'clean',
-        'middleman:build',
+        'middleman:development',
         'sass',
         'autoprefixer',
-        'cssmin',
         'concat'
     ]);
 
+
+    /**
+     * Builds the site and creates static files in `build` folder.
+     * Assets are handled as production environment assets.
+     */
+    grunt.registerTask('app-build', [
+        'clean',
+        'middleman:production',
+        'sass',
+        'autoprefixer',
+        'cssmin',
+        'concat',
+        'uglify',
+        'cacheBust'
+    ]);
 
 };

@@ -1,2 +1,2 @@
 // This is where it all goes :)
-console.log('another test');
+console.log('app js');
