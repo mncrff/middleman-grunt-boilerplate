@@ -3,3 +3,7 @@ en-US:
   paths:
     hello: hello
   hello: hello world
+  
+  index_title: Localized index page
+  index_headline: Localized index page
+  index_localized_intro: This is in english

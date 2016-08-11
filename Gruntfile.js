@@ -45,7 +45,7 @@ module.exports = function(grunt) {
             },
             scripts: {
                 files: ['<%= config.js_src %>/**/*.js'],
-                tasks: [ 'concat' ]
+                tasks: ['concat']
             }
         },
 

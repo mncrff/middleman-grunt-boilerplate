@@ -3,3 +3,7 @@ pt-BR:
   paths:
     hello: ola
   hello: olá mundo
+
+  index_title: Página de índice localizada
+  index_headline: Página de índice localizada
+  index_localized_intro: Isto está em português

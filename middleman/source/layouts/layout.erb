@@ -5,8 +5,13 @@
     <meta charset="utf-8">
     <meta content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
 
-    <!-- Use title if it's in the page YAML frontmatter -->
-    <title><%= current_page.data.title || "Middleman Test" %></title>
+    <title>
+      <% if content_for?(:title) %> 
+        <%= yield_content :title %>
+      <% else %>
+        Middleman Test
+      <% end %>
+    </title>
 
     <link href='//fonts.googleapis.com/css?family=Lato:300,400' rel='stylesheet' type='text/css'>
 
