@@ -31,6 +31,9 @@ Now you should be ready to run the project! Run `grunt` to see a list of command
 
 Run `grunt app-serve` to run the site locally at [localhost:4567](http://localhost:4567). Middleman will build the site under the `/build` folder and serve the site from this directory. The site will be built using a development mode which includes non-minified assets.
 
+
+## Build Production-ready Site
+
 Run `grunt app-build` to build the site under the `/build` folder. The site will be built using a production mode which includes minified assets. Also appends cache-busting strings to all assets and their references.
 
 
